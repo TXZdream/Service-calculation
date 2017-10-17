@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// ----从stdin或文件读取输入并存储合适的范围
 func (selpg *Selpg) Read(Logfile *os.File) {
 	if selpg == nil {
 		fmt.Fprintf(os.Stderr, "Error: Unknown error.\n")
@@ -16,6 +17,7 @@ func (selpg *Selpg) Read(Logfile *os.File) {
 	}
 	var in io.Reader
 
+	// ----确定内容来源
 	if selpg.Src == "" {
 		in = os.Stdin
 	} else {
@@ -27,6 +29,8 @@ func (selpg *Selpg) Read(Logfile *os.File) {
 			os.Exit(0)
 		}
 	}
+	
+	// ----读取内容
 	scanner := bufio.NewScanner(in)
 	if selpg.PageType == false {
 		cnt := 0
@@ -63,6 +67,7 @@ func (selpg *Selpg) Read(Logfile *os.File) {
 	Logfile.WriteString("[info]  Read data finished\n")
 }
 
+// ----输出内容到stdout
 func (selpg *Selpg) Write(Logfile *os.File) {
 	if selpg == nil {
 		fmt.Fprintf(os.Stderr, "Error: Unknown error.\n")
@@ -75,10 +80,10 @@ func (selpg *Selpg) Write(Logfile *os.File) {
 	Logfile.WriteString("[info]  Write data finished\n")
 }
 
+// ----连接到打印机
 func (selpg *Selpg) Print(Logfile *os.File) {
 	if selpg.Destination != "" {
 		lp := exec.Command("lp", fmt.Sprintf("-d %s", selpg.Destination))
-		// lp := exec.Command("go")
 		stdout, err := lp.StdoutPipe()
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error: Pipe to stdout failed.")

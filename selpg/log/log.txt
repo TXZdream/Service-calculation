@@ -6,3 +6,20 @@
 [info]  Read data finished
 [info]  Write data finished
 [error] Open new process failed
+2017-10-17 16:46:55.5281046 +0800 CST m=+0.005003500
+2017-10-17 16:48:38.8816914 +0800 CST m=+0.028999800
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 16:52:46.518073 +0800 CST m=+0.003993500
+2017-10-17 16:53:06.329928 +0800 CST m=+0.003001900
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 16:53:22.0798175 +0800 CST m=+0.031532700
+[error] Unknown file to be read
+2017-10-17 16:53:34.7945294 +0800 CST m=+0.003008800
+2017-10-17 16:53:42.4593759 +0800 CST m=+0.003001900
+[info]  Read data finished
+[info]  Write data finished
+[error] Open new process failed
