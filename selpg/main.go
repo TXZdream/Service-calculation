@@ -4,6 +4,7 @@ import "flag"
 import "os"
 import "github.com/txzdream/serviceCourse/selpg/lib/selpg"
 import "fmt"
+import "time"
 
 func main() {
 	flag.Usage = func() {
@@ -43,7 +44,16 @@ func main() {
 		Destination: *destination,
 		Src: src,
 	}
-	
-	data.Read()
-	data.Write()
+	Logfile, err := os.OpenFile("log/log.txt", os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println(err)
+	}
+	Logfile.WriteString(time.Now().String())
+	Logfile.WriteString("\n")
+
+	// 因为我不知道类似java的切片怎么去用，所以只能这种很丑的代码去完成log操作
+	data.Read(Logfile)
+	data.Write(Logfile)
+	data.Print(Logfile)
+	Logfile.Close()
 }

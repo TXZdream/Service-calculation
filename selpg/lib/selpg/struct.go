@@ -1,5 +1,9 @@
 package selpg
 
+import (
+	"os"
+)
+
 type Selpg struct {
 	Begin int
 	End int
@@ -9,4 +13,5 @@ type Selpg struct {
 	Destination string
 	Src string
 	data []string
+	Logfile *os.File
 }

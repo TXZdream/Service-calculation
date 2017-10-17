@@ -1,0 +1,8 @@
+2017-10-17 16:03:48.2011501 +0800 CST m=+0.002995700
+[info]  Read data finished
+[info]  Write data finished
+[error] Open new process failed
+2017-10-17 16:03:54.2306385 +0800 CST m=+0.005005200
+[info]  Read data finished
+[info]  Write data finished
+[error] Open new process failed

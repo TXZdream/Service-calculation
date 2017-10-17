@@ -1,15 +1,17 @@
 package selpg
 
 import (
+	"os/exec"
 	"fmt"
 	"io"
 	"bufio"
 	"os"
 )
 
-func (selpg *Selpg) Read() {
+func (selpg *Selpg) Read(Logfile *os.File) {
 	if selpg == nil {
 		fmt.Fprintf(os.Stderr, "Error: Unknown error.\n")
+		Logfile.WriteString("[error] Use null object\n")
 		os.Exit(0)
 	}
 	var in io.Reader
@@ -21,6 +23,7 @@ func (selpg *Selpg) Read() {
 		in, err = os.Open(selpg.Src)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error: No such file found. Please pass right path.\n")
+			Logfile.WriteString("[error] Unknown file to be read\n")
 			os.Exit(0)
 		}
 	}
@@ -57,14 +60,57 @@ func (selpg *Selpg) Read() {
 			cnt++
 		}
 	}
+	Logfile.WriteString("[info]  Read data finished\n")
 }
 
-func (selpg *Selpg) Write() {
+func (selpg *Selpg) Write(Logfile *os.File) {
 	if selpg == nil {
 		fmt.Fprintf(os.Stderr, "Error: Unknown error.\n")
+		Logfile.WriteString("[error] Use null object\n")
 		os.Exit(0)
 	}
 	for i := 0; i < len(selpg.data); i++ {
 		fmt.Fprintln(os.Stdout, selpg.data[i])
 	}
+	Logfile.WriteString("[info]  Write data finished\n")
+}
+
+func (selpg *Selpg) Print(Logfile *os.File) {
+	if selpg.Destination != "" {
+		lp := exec.Command("lp", fmt.Sprintf("-d %s", selpg.Destination))
+		// lp := exec.Command("go")
+		stdout, err := lp.StdoutPipe()
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error: Pipe to stdout failed.")
+			Logfile.WriteString("[error] Can not pipe stdout to new process\n")			
+		}
+		stdin, err := lp.StdinPipe()
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error: Pipe to stdin failed.")
+			Logfile.WriteString("[error] Can not pipe stdin to new process\n")
+		}
+		stderr, err := lp.StderrPipe()
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error: Pipe to stderr failed.")
+			Logfile.WriteString("[error] Can not pipe stderr to new process\n")
+		}
+		for i := 0; i < len(selpg.data); i++ {
+			fmt.Fprintf(stdin, "%s", selpg.data[i])
+		}
+		err = lp.Start()
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			Logfile.WriteString("[error] Open new process failed\n")
+			os.Exit(0)
+		}
+		r := bufio.NewScanner(stdout)
+		for r.Scan() {
+			fmt.Fprintln(os.Stdout, r.Text())
+		}
+		r = bufio.NewScanner(stderr)
+		for r.Scan() {
+			fmt.Fprintln(os.Stdout, r.Text())
+		}
+	}
+	Logfile.WriteString("[info]  Print data finished\n")
 }
