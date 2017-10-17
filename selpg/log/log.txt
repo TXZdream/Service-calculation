@@ -23,3 +23,32 @@
 [info]  Read data finished
 [info]  Write data finished
 [error] Open new process failed
+2017-10-17 16:54:47.7460428 +0800 CST m=+0.002002100
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 16:54:53.8682456 +0800 CST m=+0.002999400
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 22:39:21.9790563 +0800 CST m=+0.014997300
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 22:41:56.5475462 +0800 CST m=+0.008999800
+[info]  Read data finished
+[info]  Write data finished
+[info]  Print data finished
+2017-10-17 23:02:15.6423566 +0800 CST m=+0.012026700
+[info]  Read data finished
+[info]  Print data finished
+2017-10-17 23:03:02.6127914 +0800 CST m=+0.004011000
+[info]  Read data finished
+2017-10-17 23:04:58.6468255 +0800 CST m=+0.002966600
+[info]  Read data finished
+2017-10-17 23:10:11.41239 +0800 CST m=+0.003000600
+[info]  Read data finished
+[info]  Print data finished
+2017-10-17 23:10:40.3224232 +0800 CST m=+0.004999000
+[info]  Read data finished
+[info]  Print data finished

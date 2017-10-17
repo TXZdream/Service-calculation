@@ -17,7 +17,7 @@ func main() {
 	end := flag.Int("e", -1, "End of the page")
 	pagetype := flag.Bool("f", false, "If the page has static number of lines")
 	length := flag.Int("l", -1, "the number of lines of every page")
-	destination := flag.String("d", "", "the destination to send")
+	destination := flag.String("d", "", "the destination to write")
 	flag.Parse()
 
 	// ----处理输入错误
@@ -65,7 +65,10 @@ func main() {
 	// ----运行
 	// 因为我不知道类似java的切片怎么去用，所以只能这种很丑的代码去完成log操作
 	data.Read(Logfile)
-	data.Write(Logfile)
-	data.Print(Logfile)
+	if data.Destination == "" {
+		data.Write(Logfile)
+	} else {
+		data.Print(Logfile)
+	}
 	Logfile.Close()
 }

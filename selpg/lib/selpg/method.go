@@ -1,7 +1,6 @@
 package selpg
 
 import (
-	"os/exec"
 	"fmt"
 	"io"
 	"bufio"
@@ -83,38 +82,15 @@ func (selpg *Selpg) Write(Logfile *os.File) {
 // ----连接到打印机
 func (selpg *Selpg) Print(Logfile *os.File) {
 	if selpg.Destination != "" {
-		lp := exec.Command("lp", fmt.Sprintf("-d %s", selpg.Destination))
-		stdout, err := lp.StdoutPipe()
+		file, err := os.Create(selpg.Destination)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error: Pipe to stdout failed.")
-			Logfile.WriteString("[error] Can not pipe stdout to new process\n")			
-		}
-		stdin, err := lp.StdinPipe()
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error: Pipe to stdin failed.")
-			Logfile.WriteString("[error] Can not pipe stdin to new process\n")
-		}
-		stderr, err := lp.StderrPipe()
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error: Pipe to stderr failed.")
-			Logfile.WriteString("[error] Can not pipe stderr to new process\n")
-		}
-		for i := 0; i < len(selpg.data); i++ {
-			fmt.Fprintf(stdin, "%s", selpg.data[i])
-		}
-		err = lp.Start()
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			Logfile.WriteString("[error] Open new process failed\n")
+			fmt.Fprintln(os.Stderr, "Error: Can not create such file")
+			Logfile.WriteString("[error] can not create file as -d argument\n")
 			os.Exit(0)
 		}
-		r := bufio.NewScanner(stdout)
-		for r.Scan() {
-			fmt.Fprintln(os.Stdout, r.Text())
-		}
-		r = bufio.NewScanner(stderr)
-		for r.Scan() {
-			fmt.Fprintln(os.Stdout, r.Text())
+		for i := 0; i < len(selpg.data); i++ {
+			file.WriteString(selpg.data[i])
+			file.WriteString("\n")
 		}
 	}
 	Logfile.WriteString("[info]  Print data finished\n")
