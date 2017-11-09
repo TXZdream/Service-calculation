@@ -52,3 +52,9 @@
 2017-10-17 23:10:40.3224232 +0800 CST m=+0.004999000
 [info]  Read data finished
 [info]  Print data finished
+2017-10-17 23:12:38.5232545 +0800 CST m=+0.003001400
+[info]  Read data finished
+[info]  Write data finished
+2017-10-18 19:39:26.4208943 +0800 CST m=+0.002996500
+[info]  Read data finished
+[info]  Write data finished
